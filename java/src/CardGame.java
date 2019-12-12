@@ -6,6 +6,7 @@ public class CardGame {
     private ArrayList<Player> players;
     private Input userInput;
     private Output userOutput;
+    private CardGame game;
 
     public Input getUserInput() {
         return userInput;
@@ -15,6 +16,17 @@ public class CardGame {
         return this.userOutput;
     }
 
+    public CardGame getGame(){
+        return game;
+    }
+
+    public ArrayList<Player> getPlayers(){
+        return players;
+    }
+
+    public void setGame(CardGame game){
+        this.game = game;
+    }
     CardGame(){
         this.deck = Deck.getInstance();
         this.userInput = new ConsoleInput();
@@ -56,12 +68,19 @@ public class CardGame {
         }
     }
 
-    private void initiate(int noOfCards){
+    public void initiate(int noOfCards){
         initiatePlayers();
         dealPlayers(noOfCards);
     }
 
     public void play(int noOfCards){
         initiate(noOfCards);
+
+    }
+
+    public static void main(String[ ] args) {
+        CardGame cardGame = new CardGame();
+        cardGame.play(2);
+
     }
 }

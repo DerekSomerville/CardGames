@@ -7,11 +7,9 @@ public class Hand {
         this.handOfCards = new ArrayList<Card>();
     }
 
-    public ArrayList getHandOfCards(){
+    public ArrayList<Card> getHandOfCards(){
         return handOfCards;
     }
-
-
 
     public boolean playACard(Card card){
         return handOfCards.remove(card);
