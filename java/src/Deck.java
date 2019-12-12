@@ -1,64 +1,52 @@
+import javax.swing.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
-public class Deck {
+public class Deck{
     public int numberOfCards = 52;
-    private ArrayList<String> deckOfCards;
-    private final String[] suits = {"D","C","S","H"};
-    private final String[] faces = {"A","2","3","4","5","6","7","8","9","10","J","Q","K"};
+    private static Deck uniqueDeck;
+    private static ArrayList<Card> deckOfCards;
+    private static HashMap< int[] ,Card> cardHashMap;
 
-    Deck (){
-        numberOfCards = suits.length * faces.length;
-        deckOfCards = generateDeck();
-    }
+    private Deck(){}
 
-    private ArrayList<String> generateDeck() {
-        ArrayList<String> deckOfCards = new ArrayList<String>(numberOfCards);
-        for (String suit: suits){
-            for (String face: faces){
-                deckOfCards.add(suit + face);
+    private static void generateDeck() {
+        for (Suit suit: Suit.values()){
+            for (CardRank rank: CardRank.values()){
+                Card card = new Card(suit,rank);
+                deckOfCards.add(card);
             }
         }
-        return deckOfCards;
     }
 
-    public ArrayList getDeck(){
-        return deckOfCards;
+    public static Deck getInstance (){
+        if (uniqueDeck == null){
+            uniqueDeck = new Deck();
+            generateDeck();
+        }
+
+        return uniqueDeck;
+
+
+    }
+
+    public int getNumberOfCards(){
+        return deckOfCards.size();
+    }
+
+    public Card playACard(){
+        return deckOfCards.remove(-1);
     }
 
     public void shuffleDeck(){
         Collections.shuffle(deckOfCards);
     }
 
-    public String dealACard(){
-        return deckOfCards.remove(-1);
-    }
-
-    public ArrayList<ArrayList> dealCards(int noOfCards, int noOfHands){
-        ArrayList<ArrayList> hands = new ArrayList<ArrayList>();
-        int cardsToDeal;
-        if (noOfCards == 0){
-            cardsToDeal = (int) Math.ceil(deckOfCards.size()/ noOfHands);
-        }
-        else {
-            cardsToDeal = noOfCards;
-        }
-        for (int playerCounter=0; playerCounter<noOfHands;playerCounter++){
-            ArrayList<String> hand = new ArrayList<String>();
-            for (int cardCounter=0;cardCounter<cardsToDeal;cardCounter++){
-                if (deckOfCards.size() > 0) {
-                    hand.add(dealACard());
-                }
-            }
-            hands.add(hand);
-        }
-        return hands;
-    }
-
-    public static void main(String[ ] args) {
-        Deck deck = new Deck();
-    }
+//    public static void main(String[ ] args) {
+//        Deck deck = new Deck();
+//    }
 }
 
 
