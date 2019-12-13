@@ -1,10 +1,6 @@
 public interface PlayerState {
-    public PlayerState startGame();
-    public PlayerState dealtHand();
-    public PlayerState twist();
-    public PlayerState stick();
-    public PlayerState determineWinner();
-    public PlayerState Win();
-    public PlayerState lose();
-
+    public void playGame(Player player);
+    public void twist(Player player);
+    public void stick(Player player);
+    public String state();
 }

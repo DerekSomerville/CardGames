@@ -10,7 +10,9 @@ public class Deck{
     private static ArrayList<Card> deckOfCards;
     private static HashMap< int[] ,Card> cardHashMap;
 
-    private Deck(){}
+    private Deck(){
+        deckOfCards = new ArrayList<Card>();
+    }
 
     private static void generateDeck() {
         for (Suit suit: Suit.values()){

@@ -20,33 +20,39 @@ public class CardGame {
         return game;
     }
 
+    public Deck getDeck() { return deck;}
+
     public ArrayList<Player> getPlayers(){
         return players;
     }
 
-    public void setGame(CardGame game){
+    protected void setGame(CardGame game){
         this.game = game;
     }
+
     CardGame(){
         this.deck = Deck.getInstance();
         this.userInput = new ConsoleInput();
         this.userOutput = new ConsoleOutput();
+        this.players = new ArrayList<Player>();
     }
-    private void initiatePlayers(){
+
+    protected void initiatePlayers(){
         userOutput.output("What is your name");
         String name = userInput.getInputString();
         userOutput.output("How many players, minimum of two?");
         int noOfPlayers = userInput.getInputInt();
-        players.add(new Player(PlayerType.DEALER,"Dealer"));
-        players.add(new Player(PlayerType.COMPUTER,"Comp 1"));
-        for (int counter=2;counter < noOfPlayers;counter++){
-            players.add(new Player(PlayerType.COMPUTER,"Comp" + counter));
+        ComputerPlayer dealer = new ComputerPlayer(PlayerType.DEALER,"Dealer",17);
+        players.add(dealer);
+        players.add(new ComputerPlayer(PlayerType.COMPUTER,"Comp 1",0));
+        for (int counter=1;counter < noOfPlayers;counter++){
+            players.add(new ComputerPlayer(PlayerType.COMPUTER,"Comp" + counter,0));
         }
         players.add(new Player(PlayerType.USER,name));
 
     }
 
-    private void dealHand(Player player, int noOfCards){
+    public void dealHand(Player player, int noOfCards){
         int cardsToDeal;
         if (noOfCards == 0){
             cardsToDeal = (int) Math.ceil(deck.getNumberOfCards()/ players.size());
@@ -62,21 +68,16 @@ public class CardGame {
         }
     }
 
-    private void dealPlayers(int noOfCards){
-        for (Player player : players){
-            dealHand(player,noOfCards);
-        }
-    }
 
     public void initiate(int noOfCards){
         initiatePlayers();
-        dealPlayers(noOfCards);
     }
 
     public void play(int noOfCards){
         initiate(noOfCards);
 
     }
+
 
     public static void main(String[ ] args) {
         CardGame cardGame = new CardGame();

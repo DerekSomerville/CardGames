@@ -31,4 +31,12 @@ public class Hand {
         return result;
     }
 
+    public String show(){
+        String display = "";
+        for (Card card : handOfCards){
+            display += ", " + card.getRank().display() + " of " + card.getSuit().display();
+        }
+        return display;
+    }
+
 }
