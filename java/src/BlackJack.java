@@ -8,27 +8,27 @@ public class BlackJack extends CardGame {
         getUserOutput().output("Stick");
     }
 
-    private void callAction(Player player, String request){
-        getUserOutput().output("Request " +request);
-        getUserOutput().output("Call Action state " + player.getState().state());
-        try {
-            if (request == "Play"){
-                getUserOutput().output("If Play " + player.getState().state());
-                player.setState(new PlayingCardState());
-                player.getState().playGame(player);
-            }
-            else if (request  == "Twist"){
-                player.getState().twist(player);
-            }
-            else if (request == "Stick"){
-                player.getState().stick(player);
-            } else {
-                getUserOutput().output("Command not found");
-            }
-        }catch (Exception UnsupportedOperationException) {
-            getUserOutput().output("Command not valid for current state");
-        }
-    }
+ //   private void callAction(Player player, String request){
+ //       getUserOutput().output("Request " +request);
+ //       getUserOutput().output("Call Action state " + player.getState().state());
+        //Derektry {
+  //          if (request == "Play"){
+  //              getUserOutput().output("If Play " + player.getState().state());
+  //              player.setState(new PlayingCardState());
+  //              player.getState().playGame(player);
+ //           }
+ //           else if (request  == "Twist"){
+ //               player.getState().twist(player);
+ //           }
+ //           else if (request == "Stick"){
+ //               player.getState().stick(player);
+ //           } else {
+  //              getUserOutput().output("Command not found");
+//            }
+        //}catch (Exception UnsupportedOperationException) {
+        //    getUserOutput().output("Command not valid for current state");
+        //}
+ //   }
     public void play(){
         int noOfCards = 2;
         initiate(noOfCards);
@@ -36,11 +36,11 @@ public class BlackJack extends CardGame {
             String request;
             int counter = 0;
             //do {
-            request = player.nextPlay();
-            callAction(player,request);
-            request = player.nextPlay();
-            callAction(player,request);
-            counter ++;
+                request = player.nextPlay();
+                request = player.nextPlay();
+                request = player.nextPlay();
+
+            ++counter;
             //} while ( counter < 3 || request.substring(0,1) != "S");
         }
     }

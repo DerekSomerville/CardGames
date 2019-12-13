@@ -8,7 +8,6 @@ public class StickState implements PlayerState{
         throw new UnsupportedOperationException();
     }
     public void stick(Player player){
-        throw new UnsupportedOperationException();
     }
     public String state(){
         return "Stick";

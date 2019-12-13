@@ -29,6 +29,7 @@ public class ComputerPlayer extends Player {
         } else {
             request = "Stick";
         }
+        callAction(request);
         return request;
     }
 

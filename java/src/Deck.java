@@ -39,7 +39,7 @@ public class Deck{
     }
 
     public Card playACard(){
-        return deckOfCards.remove(-1);
+        return deckOfCards.remove(0);
     }
 
     public void shuffleDeck(){
