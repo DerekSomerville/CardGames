@@ -1,6 +1,7 @@
 public class ReadyToPlayState implements PlayerState{
     public void playGame(Player player){
         player.getGame().dealHand(player,2);
+        player.getGame().getUserOutput().output("Hello");
         player.setState(new PlayingCardState());
     }
 

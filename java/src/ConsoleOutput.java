@@ -9,4 +9,9 @@ public class ConsoleOutput implements Output{
             System.out.println(display);
         }
     }
+//    public void output(ArrayList<Card> hand){
+//        for (Card card : hand){
+//            System.out.println(card.display());
+//        }
+//    }
 }
