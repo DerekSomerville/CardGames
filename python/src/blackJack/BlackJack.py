@@ -1,14 +1,15 @@
 import random
 from python.src.Deck import Deck
+from python.src.CardGame import CardGame
 
-class BlackJack():
+class BlackJack(CardGame):
     """Constant values to be references in the functions and methods below."""
     winningScore = 21
     faceCardScore = 10
     maxAceScore = 11
     minAceScore = 1
     goodNumberOfCards = 5
-    deck = Deck()
+    noOfCards = 2
 
     def display(self,message):
         print(message)
@@ -128,14 +129,9 @@ class BlackJack():
         self.display(hands)
 
     def main(self):
-        """"Get the number of players, generate the deck of cards and work out the computer players risk."""
-        numberOfPlayers = int(input("Please enter the number of players, max is six"))
-
-        deck = self.deck.generateDeck()
-        deck = self.deck.shuffleCards(deck)
-        hands = self.deck.dealCards(deck, 2, numberOfPlayers)
-        computerRisk = self.initialiseComputerRisk(numberOfPlayers)
-        self.blackJack(deck,hands,computerRisk)
+        self.startCardGame()
+        computerRisk = self.initialiseComputerRisk(self.noOfPlayers)
+        self.blackJack(self.deckOfCards,self.hands,computerRisk)
 
 # This allows the main to be called only when you run this file.
 if __name__ == "__main__":

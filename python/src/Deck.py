@@ -57,7 +57,7 @@ class Deck():
         if allCards:
             counter = 0
             while len(deck) > 0:
-                hands[counter].append(dealACard(deck))
+                hands[counter].append(self.dealACard(deck))
                 counter = (counter +1) % noOfHands
 
         return hands
