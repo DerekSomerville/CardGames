@@ -1,4 +1,4 @@
-from python.src.Deck import Deck
+from python.src.CardGame.Deck import CardGame.Deck
 
 class WinningRummy():
 
@@ -40,7 +40,7 @@ class WinningRummy():
         currentRun = []
         previousSuit = ""
         previousFace = 0
-        deck = Deck()
+        deck = CardGame.Deck()
         deck.sortHand(hand)
         deck.convertFacesToNumbers(hand)
         for card in hand:

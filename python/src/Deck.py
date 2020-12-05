@@ -1,6 +1,6 @@
 import random #, playingCardTests
 
-class Deck():
+class CardGame.Deck():
 
     suits = {"H": "Hearts", "D": "Diamonds", "S": "Spades", "C": "Clubs"}
     faces = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"]
@@ -150,5 +150,5 @@ class Deck():
             sortHand(hand)
 
 if __name__ == '__main__':
-    deck = Deck()
+    deck = CardGame.Deck()
     print(deck.generateDeck())

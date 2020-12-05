@@ -1,7 +1,7 @@
-from python.src.Deck import Deck
+from python.src.CardGame.Deck import CardGame.Deck
 
 class Rummy():
-    deck = Deck()
+    deck = CardGame.Deck()
 
     def main(self):
 

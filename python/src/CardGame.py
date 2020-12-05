@@ -1,10 +1,10 @@
-from python.src.Deck import Deck
-class CardGame():
+from python.src.CardGame.Deck import CardGame.Deck
+class CardGame.CardGame():
 
     noOfPlayers = None
     noOfCards = 0
     hands = []
-    deck = Deck()
+    deck = CardGame.Deck()
     deckOfCards = []
 
     def startCardGame(self):

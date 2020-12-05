@@ -1,10 +1,10 @@
-from python.src.Deck import Deck
-from python.src.CardGame import CardGame
+from python.src.CardGame.Deck import CardGame.Deck
+from python.src.CardGame.CardGame import CardGame.CardGame
 import time
 
 
 
-class Snap(CardGame):
+class Snap(CardGame.CardGame):
 
     userHand = 0
     computerHand = 1

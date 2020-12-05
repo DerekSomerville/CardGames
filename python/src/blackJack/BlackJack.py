@@ -1,8 +1,8 @@
 import random
-from python.src.Deck import Deck
-from python.src.CardGame import CardGame
+from python.src.CardGame.Deck import CardGame.Deck
+from python.src.CardGame.CardGame import CardGame.CardGame
 
-class BlackJack(CardGame):
+class BlackJackWithState.BlackJack(CardGame.CardGame):
     """Constant values to be references in the functions and methods below."""
     winningScore = 21
     faceCardScore = 10
@@ -122,10 +122,10 @@ class BlackJack(CardGame):
         self.dealToComputer(deck,hands,computerRisk)
         players = self.findWinner(hands)
         if len(players) == 1:
-            self.display("Player " + str(players[0]) + " is the winner")
+            self.display("Player.Player " + str(players[0]) + " is the winner")
         else:
             for player in players:
-                self.display("Player " + str(player) + " draw")
+                self.display("Player.Player " + str(player) + " draw")
         self.display(hands)
 
     def main(self):
@@ -135,5 +135,5 @@ class BlackJack(CardGame):
 
 # This allows the main to be called only when you run this file.
 if __name__ == "__main__":
-    blackJack = BlackJack()
+    blackJack = BlackJackWithState.BlackJack()
     blackJack.main()
