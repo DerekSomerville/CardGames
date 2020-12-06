@@ -40,6 +40,7 @@ public class BlackJack extends CardGame {
     }
 
     public void play() {
+        this.setNoOfCards(2);
         this.initiate();
         userPlays(this.getPlayers().get(0));
         for (int counter=1; counter < getPlayers().size();counter++){

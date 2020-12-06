@@ -10,21 +10,24 @@ public enum CardRank {
     EIGHT(8,"Eight"),
     NINE(9,"Nine"),
     TEN(10, "Ten"),
-    JACK(10, "Jack"),
-    QUEEN(10,"Queen"),
-    KING(10,"King"),
-    ACE(11,"Ace");
+    JACK(11, "Jack"),
+    QUEEN(12,"Queen"),
+    KING(13,"King"),
+    ACE(14,"Ace");
 
-    private int value;
     private String camelCase;
+    private int rank;
 
-    CardRank(int value, String camelCase){
-        this.value = value;
+    CardRank(int rank,  String camelCase){
+        this.rank = rank;
         this.camelCase = camelCase;
     }
 
     public int getValue(){
-        return value;
+        return rank % 10;
+    }
+    public int getRank(){
+        return rank;
     }
     public String display(){
         return camelCase;

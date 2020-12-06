@@ -43,6 +43,10 @@ public class Deck{
     }
 
     public Card playACard() {
+        if (deckOfCards.size() == 0) {
+            generateDeck();
+            shuffleDeck();
+        }
         return deckOfCards.playACard();
     }
 

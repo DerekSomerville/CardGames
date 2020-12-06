@@ -20,7 +20,11 @@ public class Hand {
     }
 
     public Card playACard(){
-        return handOfCards.remove(0);
+        return handOfCards.remove(handOfCards.size()-1);
+    }
+
+    public Card playACard(int userCard){
+        return handOfCards.remove(userCard);
     }
 
     public void add(Card card){
@@ -29,6 +33,14 @@ public class Hand {
 
     public void set(int index, Card card){
         handOfCards.set(index,card);
+    }
+
+    public Hand copy(){
+        Hand newHand = new Hand();
+        for (Card card : getHandOfCards()){
+            newHand.add(card);
+        }
+        return newHand;
     }
 
     public boolean isEmpty(){
@@ -57,4 +69,11 @@ public class Hand {
         return display;
     }
 
+    public void sortHand(){
+        Collections.sort(handOfCards, Comparator.comparing(Card::shortDisplay));
+    }
+
+    public void sortHandByFace(){
+        Collections.sort(handOfCards, Comparator.comparing(Card::getRank));
+    }
 }

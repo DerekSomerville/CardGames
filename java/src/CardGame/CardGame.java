@@ -17,6 +17,10 @@ public class CardGame {
     private Output userOutput;
     private CardGame game;
 
+    public void setNoOfCards(Integer noOfCards) {
+        this.noOfCards = noOfCards;
+    }
+
     public Input getUserInput() {
         return userInput;
     }
@@ -24,6 +28,7 @@ public class CardGame {
     public Output getUserOutput(){
         return this.userOutput;
     }
+
 
     public void setUserInput(Input userInput){
         this.userInput = userInput;

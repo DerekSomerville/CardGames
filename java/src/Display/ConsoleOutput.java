@@ -27,4 +27,9 @@ public class ConsoleOutput implements Output {
         }
         output(display);
     }
+    public void outputHands(ArrayList<Hand> hands){
+        for (Hand hand : hands){
+            output(hand.show());
+        }
+    }
 }
