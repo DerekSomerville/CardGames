@@ -3,17 +3,27 @@ package Player;
 import CardGame.Hand;
 import CardGame.CardGame;
 
-public class Player {
+import java.util.Random;
 
+public class Player {
+    public int levelOfRisk;
     private Hand hand;
     private PlayerType playerType;
     private String name;
     private CardGame game;
 
 
-    public Player(PlayerType playerType, String name){
+    public Player(PlayerType playerType, String name,Integer levelOfRisk){
         this.playerType = playerType;
         this.name = name;
+        int risk;
+        Random rand = new Random();
+        if (levelOfRisk == 0){
+            risk = 11 + rand.nextInt() % 8;
+        } else {
+            risk = levelOfRisk;
+        }
+        this.levelOfRisk = risk;
     }
 
     public void setGame(CardGame game) {

@@ -1,6 +1,7 @@
 package Display;
 
 import Display.Output;
+import CardGame.Hand;
 
 import java.util.ArrayList;
 
@@ -8,14 +9,22 @@ public class ConsoleOutput implements Output {
     public void output(String display){
         System.out.println(display);
     }
+    public void output(int number){
+        System.out.println(number);
+    }
+
     public void output(ArrayList<String> displayOutput){
         for (String display : displayOutput){
-            System.out.println(display);
+            output(display);
         }
     }
-//    public void output(ArrayList<CardGame.Card> hand){
-//        for (CardGame.Card card : hand){
-//            System.out.println(card.display());
-//        }
-//    }
+    public void outputHand(Hand hand){
+        String prefix = "";
+        String display = "";
+        for (CardGame.Card card : hand.getHandOfCards()){
+            display += prefix + card.display();
+            prefix = ", ";
+        }
+        output(display);
+    }
 }

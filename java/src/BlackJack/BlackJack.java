@@ -9,50 +9,58 @@ public class BlackJack extends CardGame {
 
     public void help(){
         getUserOutput().output("Please select one of the following options:");
-        getUserOutput().output("Play");
         getUserOutput().output("Twist");
         getUserOutput().output("Stick");
     }
 
- //   private void callAction(Player.Player player, String request){
- //       getUserOutput().output("Request " +request);
- //       getUserOutput().output("Call Action state " + player.getState().state());
-        //Derektry {
-  //          if (request == "Play"){
-  //              getUserOutput().output("If Play " + player.getState().state());
-  //              player.setState(new BlackJackWithState.PlayingCardState());
-  //              player.getState().playGame(player);
- //           }
- //           else if (request  == "Twist"){
- //               player.getState().twist(player);
- //           }
- //           else if (request == "Stick"){
- //               player.getState().stick(player);
- //           } else {
-  //              getUserOutput().output("Command not found");
-//            }
-        //}catch (Exception UnsupportedOperationException) {
-        //    getUserOutput().output("Command not valid for current state");
-        //}
- //   }
-    public void play(){
-        initiate();
-        for ( Player player : getPlayers()){
-            String request;
-            int counter = 0;
-            //do {
-                request = player.nextPlay();
-                request = player.nextPlay();
-                request = player.nextPlay();
+    private void userPlays(Player player){
+        String userChoice = " ";
 
-            ++counter;
-            //} while ( counter < 3 || request.substring(0,1) != "S");
+        while (getScore(player.getHand()) <= maxScore && !userChoice.substring(0,1).toUpperCase().equals("S")){
+            help();
+            getUserOutput().outputHand(player.getHand());
+            getUserOutput().output(player.getName() + " your score is " + getScore(player.getHand()));
+            userChoice = getUserInput().getInputString();
+            getUserOutput().output("You chose" + userChoice.substring(0,1).toUpperCase());
+            if (userChoice.substring(0,1).toUpperCase().equals("T")){
+                getUserOutput().output("You twisted");
+                player.getHand().add(getDeck().playACard());
+            }
+
+        }
+        if (getScore(player.getHand()) > maxScore){
+            getUserOutput().output(player.getName() + " you are bust");
         }
     }
 
-    public int getMaxScore(){
-        return maxScore;
+    private void computerPlays(Player player){
+        while (getScore(player.getHand()) <= player.levelOfRisk){
+            player.getHand().add(getDeck().playACard());
+        }
     }
+
+    public void play() {
+        this.initiate();
+        userPlays(this.getPlayers().get(0));
+        for (int counter=1; counter < getPlayers().size();counter++){
+            computerPlays(getPlayers().get(counter));
+        }
+        determineWinner();
+    }
+
+    private void determineWinner(){
+        Integer winningScore = 0;
+        String winningName = "";
+        for (Player player : getPlayers()){
+            if (getScore(player.getHand()) <= maxScore && getScore(player.getHand()) > winningScore){
+                winningName = player.getName();
+                winningScore = getScore(player.getHand());
+            }
+        }
+        getUserOutput().output("The winner is " + winningName);
+
+    }
+
 
     public int getScore(Hand hand){
         int score = 0;

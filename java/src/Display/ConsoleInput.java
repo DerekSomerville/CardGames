@@ -15,7 +15,7 @@ public class ConsoleInput implements Input {
         result = -1;
         do {
             try {
-                result = userInput.nextInt();
+                result = Integer.parseInt(getInputString());
             } catch (NumberFormatException exception) {
                 // Display.Output expected NumberFormatException.
                 System.out.println("Please enter a integer");

@@ -1,11 +1,9 @@
 package BlackJackWithState;
 
-import Player.ComputerPlayer;
 import Player.PlayerType;
+import Player.Player;
 
-import java.util.Random;
-
-public class BlackJackComputerPlayer extends ComputerPlayer {
+public class BlackJackComputerPlayer extends Player {
 
     public BlackJackComputerPlayer(PlayerType playerType, String name, int levelOfRisk){
         super(playerType,name,levelOfRisk);

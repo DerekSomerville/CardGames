@@ -4,15 +4,13 @@ import Display.ConsoleInput;
 import Display.Input;
 import Display.Output;
 import Player.Player;
-import Player.ComputerPlayer;
 import Player.PlayerType;
-import BlackJackWithState.BlackJackComputerPlayer;
 
 import java.util.ArrayList;
 
 public class CardGame {
 
-    public Integer noOfCards = 7;
+    public Integer noOfCards = 2;
     private Deck deck;
     private ArrayList<Player> players;
     private Input userInput;
@@ -27,6 +25,9 @@ public class CardGame {
         return this.userOutput;
     }
 
+    public void setUserInput(Input userInput){
+        this.userInput = userInput;
+    }
     public CardGame getGame(){
         return game;
     }
@@ -51,36 +52,42 @@ public class CardGame {
     private void createHumanPlayer(){
         userOutput.output("What is your name");
         String name = userInput.getInputString();
-        players.add(new Player(PlayerType.USER,name));
+        players.add(new Player(PlayerType.USER,name,0));
     }
 
     private void createComputerPlayers(Integer noOfPlayers) {
-        ComputerPlayer dealer = new ComputerPlayer(PlayerType.DEALER,"Dealer",17);
+        Player dealer = new Player(PlayerType.DEALER,"Dealer",17);
         players.add(dealer);
-        players.add(new ComputerPlayer(PlayerType.COMPUTER,"Comp 1",0));
+        players.add(new Player(PlayerType.COMPUTER,"Comp 1",0));
         noOfPlayers -= 1; //Remove the dealer
         for (int counter=2;counter < noOfPlayers;counter++){
-            players.add(new ComputerPlayer(PlayerType.COMPUTER,"Comp" + counter,0));
+            players.add(new Player(PlayerType.COMPUTER,"Comp" + counter,0));
         }
     }
 
     protected void initiatePlayers(){
+        players.clear();
         createHumanPlayer();
         userOutput.output("How many players, minimum of two?");
         int noOfPlayers = userInput.getInputInt();
         createComputerPlayers(noOfPlayers);
-        dealCards(noOfPlayers);
+
 
     }
 
-    public void dealCards(Integer noOfPlayers){
+    public void dealCards(){
         boolean allCards = false;
-        if (noOfCards == 0) {
-            noOfCards = (int) Math.floor(deck.getNumberOfCards()/noOfPlayers);
+        int noOfCards;
+        if (this.noOfCards == 0) {
+            noOfCards = (int) Math.floor(deck.getNumberOfCards()/players.size());
             allCards = true;
+        } else {
+            noOfCards = this.noOfCards;
         }
         for (Player player: players){
-            player.setHand(dealHand(deck.getDeck(),noOfCards));
+            Hand hand = new Hand();
+            hand = dealHand(hand,noOfCards);
+            player.setHand(hand);
         }
         if (allCards){
             for (Player player: players){
@@ -104,15 +111,31 @@ public class CardGame {
 
     public void initiate(){
         initiatePlayers();
+        deck.shuffleDeck();
+        dealCards();
     }
 
     public void play(){
         initiate();
+        Integer counterOfPlayers = 0;
+        while (!playerHasWon(players.get(counterOfPlayers))){
+            playerPlaysHand(players.get(counterOfPlayers));
+            counterOfPlayers = (counterOfPlayers + 1) % players.size();
+        }
 
     }
 
     public int getScore(Hand hand){
         return 0;
+    }
+
+    public void playerPlaysHand(Player player){
+
+    }
+
+    public boolean playerHasWon(Player player){
+        boolean winner = true;
+        return winner;
     }
 
     public void showPlayers(){

@@ -15,8 +15,9 @@ class DeckTest {
 
     @org.junit.jupiter.api.Test
     void getNumberOfCards() {
-        //Two cards played
-        assertEquals(50, deck.getNumberOfCards());
+        int previousNoOfCards = deck.getNumberOfCards();
+        deck.playACard();
+        assertTrue(previousNoOfCards -1 == deck.getNumberOfCards());
     }
 
     @org.junit.jupiter.api.Test

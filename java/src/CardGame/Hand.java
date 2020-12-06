@@ -7,7 +7,7 @@ import java.util.*;
 public class Hand {
     private ArrayList<Card> handOfCards;
 
-    Hand(){
+    public Hand(){
         this.handOfCards = new ArrayList<Card>();
     }
 
