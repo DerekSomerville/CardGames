@@ -1,5 +1,8 @@
 package CardGame;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum CardRank {
     TWO(2,"Two"),
     THREE(3, "Three"),
@@ -17,6 +20,17 @@ public enum CardRank {
 
     private String camelCase;
     private int rank;
+    private static final Map<String,CardRank> lookup = new HashMap<String,CardRank>();
+
+    static {
+        for (CardRank rank : CardRank.values()) {
+            if (rank.getRank() <= 10) {
+                lookup.put(Integer.toString(rank.getRank()), rank);
+            } else {
+                lookup.put(rank.display().substring(0,1), rank);
+            }
+        }
+    }
 
     CardRank(int rank,  String camelCase){
         this.rank = rank;
@@ -31,5 +45,9 @@ public enum CardRank {
     }
     public String display(){
         return camelCase;
+    }
+
+    public static CardRank getCardRank(String shortCode){
+        return lookup.get(shortCode);
     }
 }

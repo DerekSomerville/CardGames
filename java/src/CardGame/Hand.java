@@ -19,6 +19,20 @@ public class Hand {
         return handOfCards.remove(card);
     }
 
+    public Card playACard(String cardShortCode){
+        Card card;
+        if (cardShortCode.length() == 1) {
+            int indexOfCard = Integer.getInteger(cardShortCode);
+            card = playACard(indexOfCard);
+        } else {
+            card = Card.createCard(cardShortCode);
+            if (!playACard(card)) {
+                card = null;
+            }
+        }
+        return card;
+    }
+
     public Card playACard(){
         return handOfCards.remove(handOfCards.size()-1);
     }
@@ -51,6 +65,10 @@ public class Hand {
         return result;
     }
 
+    public void remove(Card card){
+        handOfCards.remove(card);
+    }
+
     public void clear(){
         handOfCards.clear();
     }
@@ -74,6 +92,20 @@ public class Hand {
     }
 
     public void sortHandByFace(){
-        Collections.sort(handOfCards, Comparator.comparing(Card::getRank));
+
+        try {
+            Collections.sort(handOfCards, Comparator.comparing(Card::getRank));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    public static Hand createHand(String[] listOfCards){
+        Hand hand = new Hand();
+        for (String card : listOfCards){
+            hand.add(Card.createCard(card));
+        }
+        return hand;
     }
 }

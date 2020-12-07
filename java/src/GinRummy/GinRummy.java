@@ -48,11 +48,19 @@ public class GinRummy extends CardGame {
     private ArrayList<Hand> getRuns(Hand hand){
         ArrayList<Hand> cardsGroupByRuns = new ArrayList<Hand>();
         Hand cardsInRun = new Hand();
-        hand.sortHandByFace();
+        try {
+            hand.sortHandByFace();
+        } catch (Exception e) {
+            getUserOutput().output("sortHandByFace failed");
+            getUserOutput().outputHand(hand);
+        }
         int previousRank = 0;
         for (Card card : hand.getHandOfCards()){
             if (previousRank + 1 == card.getRank().getRank()) {
                 cardsInRun.add(card);
+                previousRank = card.getRank().getRank();
+            } else if (previousRank == card.getRank().getRank()){
+                previousRank = card.getRank().getRank();
             } else {
                 if (cardsInRun.size() > 0){
                     cardsGroupByRuns.add(cardsInRun.copy());
@@ -87,8 +95,8 @@ public class GinRummy extends CardGame {
         player.getHand().add(card);
         player.getHand().sortHand();
         getUserOutput().output(player.getHand().show());
-        getUserOutput().output("Please enter zero to seven to select card to dis guard ");
-        int userCard = getUserInput().getInputInt();
+        getUserOutput().output("Please enter zero to seven to select card to dis guard or enter the card e.g. HA");
+        String userCard = getUserInput().getInputString();
         disGuardedCards.add(player.getHand().playACard(userCard));
     }
 
@@ -121,22 +129,34 @@ public class GinRummy extends CardGame {
 
     }
 
+    public int scoreHand(Hand hand){
+        Hand newHand = hand.copy();
+
+        int total = 0;
+        ArrayList<Hand> listOfSuits = getCardsOfSameSuite(newHand);
+
+        for (Hand currentHand : listOfSuits){
+            if (currentHand.size() >= 3) {
+                total += currentHand.size();
+                for (Card card : currentHand.getHandOfCards()){
+                    newHand.remove(card);
+                }
+            }
+        }
+        ArrayList<Hand> listOfRuns = getRuns(newHand);
+        for (Hand currentHand : listOfRuns){
+            if (currentHand.size() >= 3) {
+                total += currentHand.size();
+                getUserOutput().outputHand(currentHand);
+
+            }
+        }
+        return total;
+    }
+
     public boolean playerHasWon(Player player){
         boolean winner = false;
-        ArrayList<Hand> listOfRuns = getRuns(player.getHand());
-        ArrayList<Hand> listOfSuits = getCardsOfSameSuite(player.getHand());
-        int total = 0;
-        for (Hand hand : listOfRuns){
-            if (hand.size() >= 3) {
-                total += hand.size();
-            }
-        }
-        for (Hand hand : listOfSuits){
-            if (hand.size() >= 3) {
-                total += hand.size();
-            }
-        }
-        getUserOutput().output(total);
+        int total = scoreHand(player.getHand());
         if (total >= numberOfCards){
             winner = true;
             getUserOutput().output("Winner is " + player.getName());

@@ -31,4 +31,9 @@ public class Card {
         return suit.display().substring(0,1) + rank.getValue();
     }
 
+    public static Card createCard(String shortCode) {
+        Card card = new Card(Suit.getSuit(shortCode.substring(0,1)),CardRank.getCardRank(shortCode.substring(1,shortCode.length())));
+        return card;
+    }
+
 }
