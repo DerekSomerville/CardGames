@@ -1,8 +1,8 @@
 import random
-from python.src.CardGame.Deck import CardGame.Deck
-from python.src.CardGame.CardGame import CardGame.CardGame
+from python.src.CardGame.CardGame import Deck
+from python.src.CardGame.CardGame import CardGame
 
-class BlackJackWithState.BlackJack(CardGame.CardGame):
+class BlackJack(CardGame):
     """Constant values to be references in the functions and methods below."""
     winningScore = 21
     faceCardScore = 10
@@ -14,6 +14,10 @@ class BlackJackWithState.BlackJack(CardGame.CardGame):
     def display(self,message):
         print(message)
 
+    def displayHands(self,hands):
+        for hand in hands:
+            print(hand.getHand())
+
     def displayWithItem(self,message,item):
         print(message,item)
 
@@ -23,15 +27,15 @@ class BlackJackWithState.BlackJack(CardGame.CardGame):
      then ten additional score is added on (one already been added and the score for the ace is eleven)"""
         totalScore = 0
         hasAnAce = False
-        self.deck.convertFacesToNumbers(hand)
-        for card in hand:
+        hand.convertFacesToNumbers()
+        for card in hand.getHand():
             if int(card[1:len(card)]) == self.minAceScore:
                 hasAnAce = True
             if int(card[1:len(card)])  > self.faceCardScore: #Face cards i.e. King, Queen and Jack
                 totalScore += self.faceCardScore
             else:
                 totalScore += int(card[1:len(card)])
-        self.deck.convertNumbersToFaces(hand)
+        hand.convertNumbersToFaces()
         if totalScore > self.winningScore:
             totalScore = 0
         elif hasAnAce and totalScore <= self.maxAceScore:
@@ -39,11 +43,11 @@ class BlackJackWithState.BlackJack(CardGame.CardGame):
 
         return totalScore
 
-    def dealToPlayer(self,deck,hand):
+    def dealToPlayer(self,hand):
         """Deal a card to a player from the deck. The score is then checked and if the have a score above 21 they
      get a score of 0. We return True if they are still below 21 or False if the score goes above i.e. when it is zero."""
         playerGood = False
-        hand.append(self.deck.dealACard(deck))
+        hand.append(self.deck.dealACard())
         if self.scoreHand(hand) > 0:
             playerGood = True
         return playerGood
@@ -58,16 +62,16 @@ class BlackJackWithState.BlackJack(CardGame.CardGame):
             answer = input("That is not a valid input. Please select (D)raw or (S)tick: ")
         return answer.upper()
 
-    def dealToUser(self,deck,hand):
+    def dealToUser(self,hand):
         """The user will be displayed their hand and can either request to be dealt a new ard from the deck or they
      can stick so stop and move on. When you are dealt a card we determine the score, if you go over the limit 21 you loose
      and are bust. In this case we move on."""
         answer = "D"
         while answer == "D":
-            self.displayWithItem("Your hand is", hand)
+            self.displayWithItem("Your hand is", hand.getHand())
             answer = self.validDealInput()
             if answer == "D":
-                if not self.dealToPlayer(deck,hand):
+                if not self.dealToPlayer(hand):
                     answer = "F"
                     self.displayWithItem("Sorry you have gone over the score and are bust", hand)
 
@@ -101,39 +105,39 @@ class BlackJackWithState.BlackJack(CardGame.CardGame):
             computerRisk[counter] = random.randint(2,9)
         return computerRisk
 
-    def dealToComputer(self,deck,hands,computerRisk):
+    def dealToComputer(self,hands,computerRisk):
         """The computer will have a risk, the number on or above they will stick at i.e. not ask for more cards. So
      if there risk level is nine they will stick if the have a score of twelve or above. If they have nine they will request an
      additional card. One gap is the computer does not know if they have an Ace. If the have an ace it could be sensible to
      request another card, this would require a second risk level for when you have an Ace."""
         for counter in computerRisk.keys():
             score = self.scoreHand(hands[counter])
-            while score > 0 and score + computerRisk[counter] < self.winningScore and len(deck) >0:
-                result = self.dealToPlayer(deck,hands[counter])
+            while score > 0 and score + computerRisk[counter] < self.winningScore and self.deck.size() >0:
+                result = self.dealToPlayer(hands[counter])
                 score = self.scoreHand(hands[counter])
 
-    def blackJack(self,deck,hands,computerRisk):
+    def blackJack(self,hands,computerRisk):
         """The Black Jack method is passed a deck of playing cards, a starting deal of two cards each and the level
      of risk for the computer. The cards need to add up to 21 or less. If you go above 21 you are bust (loose). First the
      user has the opportunity to request more cards to be dealt, one at a time. The computer will have a risk, the number
      on or above they will stick at i.e. not ask for more cards. Once all the cards have been dealt we determine the winner
      i.e. the closest to 21."""
-        self.dealToUser(deck, hands[self.deck.userHand])
-        self.dealToComputer(deck,hands,computerRisk)
+        self.dealToUser( hands[self.deck.userHand])
+        self.dealToComputer(hands,computerRisk)
         players = self.findWinner(hands)
         if len(players) == 1:
-            self.display("Player.Player " + str(players[0]) + " is the winner")
+            self.display("Player " + str(players[0]) + " is the winner")
         else:
             for player in players:
-                self.display("Player.Player " + str(player) + " draw")
-        self.display(hands)
+                self.display("Player " + str(player) + " draw")
+        self.displayHands(hands)
 
     def main(self):
         self.startCardGame()
         computerRisk = self.initialiseComputerRisk(self.noOfPlayers)
-        self.blackJack(self.deckOfCards,self.hands,computerRisk)
+        self.blackJack(self.hands,computerRisk)
 
 # This allows the main to be called only when you run this file.
 if __name__ == "__main__":
-    blackJack = BlackJackWithState.BlackJack()
+    blackJack = BlackJack()
     blackJack.main()

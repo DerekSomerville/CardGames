@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class GinRummy extends CardGame {
 
-    private Hand disGuardedCards = new Hand();
+    private Hand discardCards = new Hand();
     public int numberOfCards = 7;
 
     private ArrayList<Hand> getCardsOfSameSuite(Hand hand){
@@ -78,8 +78,8 @@ public class GinRummy extends CardGame {
 
     private void help(){
         getUserOutput().output("Take from the dis Guarded pile or from the Deck");
-        if (disGuardedCards.size() > 0) {
-            getUserOutput().output("The dis guarded card " + disGuardedCards.getHandOfCards().get(disGuardedCards.size()-1).shortDisplay());
+        if (discardCards.size() > 0) {
+            getUserOutput().output("The dis guarded card " + discardCards.getHandOfCards().get(discardCards.size()-1).shortDisplay());
         }
     }
 
@@ -90,21 +90,21 @@ public class GinRummy extends CardGame {
         if (userChoice.toUpperCase().equals("D")){
             card = getDeck().playACard();
         } else {
-            card = disGuardedCards.playACard();
+            card = discardCards.playACard();
         }
         player.getHand().add(card);
         player.getHand().sortHand();
         getUserOutput().output(player.getHand().show());
         getUserOutput().output("Please enter zero to seven to select card to dis guard or enter the card e.g. HA");
         String userCard = getUserInput().getInputString();
-        disGuardedCards.add(player.getHand().playACard(userCard));
+        discardCards.add(player.getHand().playACard(userCard));
     }
 
     private void computerPlaysHand(Player player){
         Card card = null;
         boolean playFromDeck = true;
-        if (disGuardedCards.size() > 0) {
-            card = disGuardedCards.playACard();
+        if (discardCards.size() > 0) {
+            card = discardCards.playACard();
             player.getHand().add(card);
             if (!playerHasWon(player)) {
                 player.getHand().playACard(card);
@@ -147,8 +147,6 @@ public class GinRummy extends CardGame {
         for (Hand currentHand : listOfRuns){
             if (currentHand.size() >= 3) {
                 total += currentHand.size();
-                getUserOutput().outputHand(currentHand);
-
             }
         }
         return total;

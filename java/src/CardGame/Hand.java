@@ -22,7 +22,7 @@ public class Hand {
     public Card playACard(String cardShortCode){
         Card card;
         if (cardShortCode.length() == 1) {
-            int indexOfCard = Integer.getInteger(cardShortCode);
+            int indexOfCard = Integer.parseInt(cardShortCode);
             card = playACard(indexOfCard);
         } else {
             card = Card.createCard(cardShortCode);

@@ -1,30 +1,24 @@
-from python.src.CardGame.Deck import CardGame.Deck
+from python.src.CardGame.CardGame import Deck
+from python.src.CardGame.Hand import Hand
 
 class WinningRummy():
 
     def getGroupsOfSuits(self,hand):
         allGroupsOfSuites = []
-        groupOfSameSuite = []
+        groupOfSameSuite = Hand()
         hand.sort()
         previousSuit  = ""
-        for card in hand:
+        for card in hand.getHand():
             if card[0] == previousSuit:
                 groupOfSameSuite.append(card)
             else:
-                if len(groupOfSameSuite) > 0:
+                if groupOfSameSuite.size() > 0:
                     allGroupsOfSuites.append(groupOfSameSuite.copy())
                 groupOfSameSuite.clear()
                 groupOfSameSuite.append(card)
             previousSuit = card[0]
         allGroupsOfSuites.append(groupOfSameSuite.copy())
         return allGroupsOfSuites
-
-    def hasWinningHand(self, hands):
-        winningHands = []
-        for hand in hands:
-            if len(hand) >= 3:
-                winningHands.append(hand)
-        return winningHands
 
     def invertCard(self,card):
         return card[1:3]+card[0]
@@ -37,32 +31,49 @@ class WinningRummy():
 
     def getRuns(self,hand):
         allRuns = []
-        currentRun = []
+        currentRun = Hand()
         previousSuit = ""
         previousFace = 0
-        deck = CardGame.Deck()
-        deck.sortHand(hand)
-        deck.convertFacesToNumbers(hand)
-        for card in hand:
+        hand.sort()
+        hand.convertFacesToNumbers()
+        for card in hand.getHand():
             if card[0] == previousSuit and int(card[1:3]) == previousFace + 1:
                 currentRun.append(card)
             else:
-                if len(currentRun) >1:
-                    deck.convertNumbersToFaces(currentRun)
+                if currentRun.size() >1:
+                    currentRun.convertNumbersToFaces()
                     allRuns.append(currentRun.copy())
                 currentRun.clear()
                 currentRun.append(card)
             previousSuit = card[0]
             previousFace = int(card[1:3])
-
-
+        hand.convertNumbersToFaces()
         return allRuns
 
-    def hasRummy(self,handofRuns,groupBySuit):
-        totalCards = 7
+    def hasRummyScore(self,handOfCards):
         counter = 0
-        for hand in handofRuns:
-            counter += len(hand)
+        newHand = handOfCards.copy()
+        handOfRuns = self.getRuns(newHand)
+        for hand in handOfRuns:
+            if hand.size() >= 3:
+                #print("handRummyScore hand",handOfCards.getHand())
+                #print("handRummyScore hand of handOfRuns",hand.getHand())
+                counter += hand.size()
+                for card in hand.getHand():
+                    #print("newHand",newHand.getHand())
+                    #print("card",card)
+                    newHand.remove(card)
+        groupBySuit = self.getGroupsOfSuits(newHand)
         for hand in groupBySuit:
-            counter += len(hand)
-        return counter >= totalCards
+            if hand.size() >= 3:
+                counter += hand.size()
+        return counter
+
+    def hasRummy(self,hand):
+        totalCards = 7
+        winner = False
+        counter = self.hasRummyScore(hand)
+        if counter >= totalCards:
+            print(hand.getHand())
+            winnner = True
+        return winner

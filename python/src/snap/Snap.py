@@ -1,10 +1,10 @@
-from python.src.CardGame.Deck import CardGame.Deck
-from python.src.CardGame.CardGame import CardGame.CardGame
+from python.src.CardGame.CardGame import Deck
+from python.src.CardGame.CardGame import CardGame
 import time
 
 
 
-class Snap(CardGame.CardGame):
+class Snap(CardGame):
 
     userHand = 0
     computerHand = 1
@@ -28,14 +28,14 @@ class Snap(CardGame.CardGame):
     # from either hand is then returned.
     def playCard(self,currentScore,hands):
         if currentScore[self.computerHand]["turn"]:
-            nextCard = self.deck.dealACard(hands[1])
+            nextCard = hands[1].playACard()
             prompt = "Computer plays "
             currentScore[self.computerHand]["turn"] = False
         else:
             # The next function returns a playing card. The playing card is the next card from the users hand. A list
             # "hands" is a list of lists of cards. The constant playCard.userHand is used to get the hand of cards for the
             # user
-            nextCard = self.deck.dealACard(hands[self.deck.userHand])
+            nextCard = hands[self.deck.userHand].playACard()
             prompt = "You played "
             currentScore[self.userHand]["turn"] = False
         print(prompt + nextCard)
