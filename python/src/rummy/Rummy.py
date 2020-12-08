@@ -15,7 +15,7 @@ class Rummy(CardGame):
         if len(self.discardedCards) > 0:
             print("Discarded Cards",self.discardedCards[-1])
             userChoice = input("Do you want this card")
-            if userChoice.upper()[0] == "Y":
+            if userChoice.upper()[0] == "Y" or userChoice.upper() == self.discardedCards[-1]:
                 hand.append(self.discardedCards.pop())
         if len(self.discardedCards) == 0 or userChoice.upper()[0] != "Y":
             hand.append(self.deck.dealACard())
@@ -57,7 +57,7 @@ class Rummy(CardGame):
         self.discardedCards.append(cardToDrop)
     def playRummy(self):
         counter = 0
-        while not self.winningRummy.hasRummy(self.hands[counter]):
+        while not self.winningRummy.hasRummy(self.hands[counter],counter):
             if counter == 0:
                 self.playHumanRummyHand(self.hands[counter])
             else:

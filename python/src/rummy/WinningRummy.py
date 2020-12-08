@@ -69,11 +69,15 @@ class WinningRummy():
                 counter += hand.size()
         return counter
 
-    def hasRummy(self,hand):
+    def hasRummy(self,hand,noOfHand):
         totalCards = 7
         winner = False
         counter = self.hasRummyScore(hand)
         if counter >= totalCards:
+            if noOfHand == 0:
+                "You won with hand "
+            else:
+                print("Computer player won ",noOfHand)
             print(hand.getHand())
             winner = True
         return winner

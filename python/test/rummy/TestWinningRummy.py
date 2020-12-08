@@ -119,7 +119,7 @@ class TestWinningRummy(unittest.TestCase):
         handOfCards = ["C2","D6","CA","C9","D4","D5","D3"]
         hand = Hand()
         hand.hand = handOfCards
-        self.assertTrue(self.winningRummy.hasRummy(hand))
+        self.assertTrue(self.winningRummy.hasRummy(hand,0))
 
     def test_hasRummyScore(self):
         handOfCards = ["C2","D6","CA","C9","D4","D5","D3"]
@@ -131,7 +131,7 @@ class TestWinningRummy(unittest.TestCase):
         handOfCards = ["C2","D6","CA","H9","D4","D5","D3"]
         hand = Hand()
         hand.hand = handOfCards
-        self.assertFalse(self.winningRummy.hasRummy(hand))
+        self.assertFalse(self.winningRummy.hasRummy(hand,0))
 
 if __name__ == '__main__':
     unittest.main()
