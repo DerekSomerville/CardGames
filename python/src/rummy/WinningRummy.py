@@ -75,5 +75,5 @@ class WinningRummy():
         counter = self.hasRummyScore(hand)
         if counter >= totalCards:
             print(hand.getHand())
-            winnner = True
+            winner = True
         return winner
