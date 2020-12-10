@@ -10,7 +10,6 @@ public class Player {
     private Hand hand;
     private PlayerType playerType;
     private String name;
-    private CardGame game;
 
 
     public Player(PlayerType playerType, String name,Integer levelOfRisk){
@@ -26,12 +25,8 @@ public class Player {
         this.levelOfRisk = risk;
     }
 
-    public void setGame(CardGame game) {
-        this.game = game;
-    }
-
-    public CardGame getGame(){
-        return this.game;
+    public boolean hasHand(){
+        return hand != null;
     }
 
     public PlayerType getPlayerType(){

@@ -1,20 +1,26 @@
 package BlackJackWithState;
 import CardGame.Hand;
+import Player.Player;
 
 public class ReadyToPlayState implements PlayerState{
-    public void playGame(BlackJackPlayer player){
-        Hand hand = player.getHand();
-        player.setHand(player.getGame().dealHand(hand,2));
-        player.getGame().getUserOutput().output("Hello");
-        player.setState(new PlayingCardState());
+    public PlayerState playGame(BlackJackWithState game, Player player){
+        game.dealCards();
+        return new PlayingCardState();
     }
 
-    public void twist(BlackJackPlayer player){
-        throw new UnsupportedOperationException();
+    public PlayerState twist(BlackJackWithState game, Player player){
+        game.getUserOutput().output("Not a valid choice");
+        return this;
     }
-    public void stick(BlackJackPlayer player){
-        throw new UnsupportedOperationException();
+    public PlayerState stick(BlackJackWithState game, Player player){
+        game.getUserOutput().output("Not a valid choice");
+        return this;
     }
+    public PlayerState end(BlackJackWithState game, Player player){
+        player.getHand().clear();
+        return new ReadyToPlayState();
+    }
+
     public String state(){
         return "Ready to play";
     }

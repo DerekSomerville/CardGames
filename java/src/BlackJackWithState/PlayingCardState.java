@@ -2,19 +2,31 @@ package BlackJackWithState;
 
 import CardGame.CardGame;
 import CardGame.Card;
+import Player.Player;
 
 public class PlayingCardState implements PlayerState{
-    public void twist(BlackJackPlayer player){
-        CardGame game = player.getGame();
-        Card card = game.getDeck().playACard();
-        player.getHand().add(card);
+    public PlayerState playGame(BlackJackWithState game, Player player){
+        game.getUserOutput().output("Not a valid choice");
+        return this;
+    }
 
+    public PlayerState twist(BlackJackWithState game, Player player){
+        PlayerState playerState = this;
+        player.getHand().add(game.getDeck().playACard());
+        if (game.getScore(player.getHand()) > game.getMaxScore()){
+            game.getUserOutput().output("You are bust");
+            playerState = new EndState();
+        }
+        return playerState;
     }
-    public void stick(BlackJackPlayer player){
-        player.setState(new StickState());
+    public PlayerState stick(BlackJackWithState game, Player player){
+        return new EndState();
     }
-    public void playGame(BlackJackPlayer player){ throw new UnsupportedOperationException(); }
-    public String state(){
-        return "Playing cards";
+    public PlayerState end(BlackJackWithState game, Player player){
+        game.getUserOutput().output("Not a valid choice");
+        return new EndState();
     }
+
+    public String state() {return "Playing game";}
+
 }

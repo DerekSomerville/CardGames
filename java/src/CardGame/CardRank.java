@@ -38,7 +38,15 @@ public enum CardRank {
     }
 
     public int getValue(){
-        return rank % 10;
+        int value = rank;
+        if (rank == CardRank.ACE.rank){
+            value = 11;
+        } else if (rank == CardRank.JACK.rank || rank == CardRank.QUEEN.rank || rank == CardRank.KING.rank) {
+            return 10;
+        } else {
+            value = rank;
+        }
+        return value;
     }
     public int getRank(){
         return rank;

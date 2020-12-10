@@ -4,25 +4,43 @@ import CardGame.Card;
 import Player.Player;
 import CardGame.CardGame;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class BlackJack extends CardGame {
     private int maxScore = 21;
+    public int noOfCards = 2;
+
+    public int getMaxScore(){
+        return maxScore;
+    }
 
     public void help(){
         getUserOutput().output("Please select one of the following options:");
-        getUserOutput().output("Twist");
-        getUserOutput().output("Stick");
+        for (BlackJackActions action : BlackJackActions.values()) {
+            getUserOutput().output(action.display());
+        }
+    }
+
+    public BlackJackActions getPlayerAction(Player player){
+        String userChoice = " ";
+        BlackJackActions userAction;
+        help();
+        if (player.hasHand()) {
+            getUserOutput().outputHand(player.getHand());
+        }
+        userChoice = getUserInput().getInputString();
+        userAction = BlackJackActions.getAction(userChoice.substring(0,1).toUpperCase());
+        getUserOutput().output("You chose " + userAction.display());
+        return userAction;
     }
 
     private void userPlays(Player player){
-        String userChoice = " ";
+        BlackJackActions userAction = BlackJackActions.PLAY;
 
-        while (getScore(player.getHand()) <= maxScore && !userChoice.substring(0,1).toUpperCase().equals("S")){
-            help();
-            getUserOutput().outputHand(player.getHand());
-            getUserOutput().output(player.getName() + " your score is " + getScore(player.getHand()));
-            userChoice = getUserInput().getInputString();
-            getUserOutput().output("You chose" + userChoice.substring(0,1).toUpperCase());
-            if (userChoice.substring(0,1).toUpperCase().equals("T")){
+        while (getScore(player.getHand()) <= maxScore && userAction != BlackJackActions.STICK){
+            userAction = getPlayerAction(player);
+            if (userAction == BlackJackActions.TWIST){
                 getUserOutput().output("You twisted");
                 player.getHand().add(getDeck().playACard());
             }
@@ -33,7 +51,7 @@ public class BlackJack extends CardGame {
         }
     }
 
-    private void computerPlays(Player player){
+    public void computerPlays(Player player){
         while (getScore(player.getHand()) <= player.levelOfRisk){
             player.getHand().add(getDeck().playACard());
         }
@@ -49,16 +67,19 @@ public class BlackJack extends CardGame {
         determineWinner();
     }
 
-    private void determineWinner(){
+    public void determineWinner(){
         Integer winningScore = 0;
         String winningName = "";
+        Hand winningHand = new Hand();
         for (Player player : getPlayers()){
             if (getScore(player.getHand()) <= maxScore && getScore(player.getHand()) > winningScore){
                 winningName = player.getName();
                 winningScore = getScore(player.getHand());
+                winningHand = player.getHand();
             }
         }
         getUserOutput().output("The winner is " + winningName);
+        getUserOutput().outputHand(winningHand);
 
     }
 
@@ -74,7 +95,6 @@ public class BlackJack extends CardGame {
     public static void main(String[ ] args) {
         BlackJack blackJack = new BlackJack();
         blackJack.play();
-
     }
 
 

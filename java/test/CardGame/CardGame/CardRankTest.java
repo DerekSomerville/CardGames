@@ -30,4 +30,13 @@ class CardRankTest {
     void getCardRankTwo() {
         assertEquals(CardRank.TWO,CardRank.getCardRank("2"));
     }
+
+    @Test
+    void getCardRankValueKing() {
+        assertEquals(10,CardRank.KING.getValue());
+    }
+    @Test
+    void getCardRankValueAce() {
+        assertEquals(11,CardRank.ACE.getValue());
+    }
 }
