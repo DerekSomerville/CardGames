@@ -1,7 +1,6 @@
 package CardGame;
 import Display.ConsoleOutput;
 import Display.ConsoleInput;
-import Display.Input;
 import Display.Output;
 import Player.Player;
 import Player.PlayerType;
@@ -13,7 +12,7 @@ public class CardGame {
     public Integer noOfCards = 2;
     private Deck deck;
     private ArrayList<Player> players;
-    private Input userInput;
+    private ConsoleInput userInput;
     private Output userOutput;
     private CardGame game;
 
@@ -21,7 +20,7 @@ public class CardGame {
         this.noOfCards = noOfCards;
     }
 
-    public Input getUserInput() {
+    public ConsoleInput getUserInput() {
         return userInput;
     }
 
@@ -29,10 +28,6 @@ public class CardGame {
         return this.userOutput;
     }
 
-
-    public void setUserInput(Input userInput){
-        this.userInput = userInput;
-    }
     public CardGame getGame(){
         return game;
     }

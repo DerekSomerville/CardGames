@@ -1,10 +1,6 @@
 package CardGame;
 
-import Display.TestingInput;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import CardGame.CardGame;
-import CardGame.Hand;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,8 +8,6 @@ class CardGameTest {
     CardGame cardGame = new CardGame();
 
     CardGameTest(){
-        TestingInput testingInput = new TestingInput();
-        cardGame.setUserInput(testingInput);
     }
 
     @Test
