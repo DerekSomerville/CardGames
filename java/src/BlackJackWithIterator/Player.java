@@ -1,18 +1,18 @@
-package Player;
+package BlackJackWithIterator;
 
-import CardGame.Hand;
-
+import BlackJackWithIterator.Hand;
+import Player.PlayerType;
 
 import java.util.Random;
 
 public class Player {
     public int levelOfRisk;
-    private Hand hand;
+    private BlackJackWithIterator.Hand hand;
     private PlayerType playerType;
     private String name;
 
 
-    public Player(PlayerType playerType, String name,Integer levelOfRisk){
+    public Player(PlayerType playerType, String name, Integer levelOfRisk){
         this.playerType = playerType;
         this.name = name;
         int risk;
@@ -56,3 +56,4 @@ public class Player {
     }
 
 }
+
