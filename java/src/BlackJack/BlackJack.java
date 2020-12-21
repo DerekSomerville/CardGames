@@ -46,9 +46,7 @@ public class BlackJack extends CardGame {
             }
 
         }
-        if (getScore(player.getHand()) > maxScore){
-            getUserOutput().output(player.getName() + " you are bust");
-        }
+
     }
 
     public void computerPlays(Player player){
@@ -70,12 +68,16 @@ public class BlackJack extends CardGame {
     public void determineWinner(){
         Integer winningScore = 0;
         String winningName = "";
+        int currentScore = 0;
         Hand winningHand = new Hand();
         for (Player player : getPlayers()){
-            if (getScore(player.getHand()) <= maxScore && getScore(player.getHand()) > winningScore){
+            currentScore = getScore(player.getHand());
+            if (currentScore <= maxScore && currentScore > winningScore){
                 winningName = player.getName();
-                winningScore = getScore(player.getHand());
+                winningScore = currentScore;
                 winningHand = player.getHand();
+            } else if ( currentScore > maxScore){
+                getUserOutput().output(player.getName() + " you are bust");
             }
         }
         getUserOutput().output("The winner is " + winningName);

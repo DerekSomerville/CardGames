@@ -56,9 +56,8 @@ public class CardGame {
     }
 
     private void createComputerPlayers(Integer noOfPlayers) {
-        Player dealer = new Player(PlayerType.DEALER,"Dealer",17);
+        Player dealer = new Player(PlayerType.DEALER,"Dealer 1",17);
         players.add(dealer);
-        players.add(new Player(PlayerType.COMPUTER,"Comp 1",0));
         noOfPlayers -= 1; //Remove the dealer
         for (int counter=2;counter < noOfPlayers;counter++){
             players.add(new Player(PlayerType.COMPUTER,"Comp" + counter,0));

@@ -4,8 +4,9 @@ import CardGame.Card;
 
 import java.util.*;
 
-public class Hand {
+public class Hand{
     private ArrayList<Card> handOfCards;
+
 
     public Hand(){
         this.handOfCards = new ArrayList<Card>();
@@ -18,6 +19,7 @@ public class Hand {
     public Boolean playACard(Card card){
         return handOfCards.remove(card);
     }
+
 
     public Card playACard(String cardShortCode){
         Card card;
