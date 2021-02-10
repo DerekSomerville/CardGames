@@ -27,7 +27,7 @@ public enum CardRank {
             if (rank.getRank() <= 10) {
                 lookup.put(Integer.toString(rank.getRank()), rank);
             } else {
-                lookup.put(rank.display().substring(0,1), rank);
+                lookup.put(rank.displayCamelCase().substring(0,1), rank);
             }
         }
     }
@@ -51,8 +51,22 @@ public enum CardRank {
     public int getRank(){
         return rank;
     }
-    public String display(){
+    public String displayCamelCase(){
         return camelCase;
+    }
+
+    public String shortDisplay(){
+        String display;
+        if (rank < CardRank.JACK.rank) {
+            display = Integer.toString(rank);
+        } else {
+            display = camelCase.substring(0,1);
+        }
+        return display;
+    }
+
+    public String toString(){
+        return shortDisplay();
     }
 
     public static CardRank getCardRank(String shortCode){

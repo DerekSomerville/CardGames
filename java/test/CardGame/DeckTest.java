@@ -1,8 +1,5 @@
 package CardGame;
 
-import CardGame.Deck;
-import org.junit.jupiter.api.BeforeAll;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class DeckTest {
@@ -22,12 +19,12 @@ class DeckTest {
 
     @org.junit.jupiter.api.Test
     void playACard() {
-        assertEquals(Suit.HEARTS,deck.playACard().getSuit());
+        assertEquals(Suit.CLUBS,deck.playACard().getSuit());
     }
 
     @org.junit.jupiter.api.Test
     void shuffleDeck() {
         deck.shuffleDeck();
-        assertNotEquals("HA",deck.playACard().display());
+        assertNotEquals("HA",deck.playACard().displayCamelCase());
     }
 }

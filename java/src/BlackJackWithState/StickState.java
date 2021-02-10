@@ -8,16 +8,16 @@ public class StickState implements PlayerState{
         Hand hand = player.getHand();
         hand.clear();
         hand = game.dealHand(hand,game.noOfCards);
-        game.getUserOutput().output("Hello");
+        game.output.output("Hello");
         return new PlayingCardState();
     }
 
     public PlayerState twist(BlackJackWithState game, Player player){
-        game.getUserOutput().output("Not a valid choice");
+        game.output.output("Not a valid choice");
         return this;
     }
     public PlayerState stick(BlackJackWithState game, Player player){
-        game.getUserOutput().output("Not a valid choice");
+        game.output.output("Not a valid choice");
         return this;
     }
     public PlayerState end(BlackJackWithState game, Player player){

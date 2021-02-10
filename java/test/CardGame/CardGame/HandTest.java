@@ -48,7 +48,7 @@ class HandTest {
     void show() {
         String[] listOfCards = {"H2","H3","C3","H4","H5","CA","C5"};
         Hand testHand = Hand.createHand(listOfCards);
-        assertEquals("H2, H3, C3, H4, H5, C4, C5",testHand.show());
+        assertEquals("H2, H3, C3, H4, H5, CA, C5",testHand.toString());
     }
 
     @Test
@@ -60,7 +60,7 @@ class HandTest {
         String[] listOfCards = {"H2","H3","C3","H4","H5","CA","C5"};
         Hand testHand = Hand.createHand(listOfCards);
         testHand.sortHandByFace();
-        assertEquals("H2, H3, C3, H4, H5, C5, C4",testHand.show());
+        assertEquals("H2, H3, C3, H4, H5, C5, CA",testHand.toString());
     }
 
     @Test

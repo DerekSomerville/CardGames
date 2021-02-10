@@ -9,37 +9,19 @@ import java.util.ArrayList;
 
 public class CardGame {
 
-    public Integer noOfCards = 2;
-    private Deck deck;
-    private ArrayList<Player> players;
-    private ConsoleInput userInput;
-    private Output userOutput;
-    private CardGame game;
+    protected Integer noOfCards = 2;
+    protected Deck deck;
+    protected ArrayList<Player> players;
+    protected ConsoleInput userInput;
+    protected Output userOutput;
+
 
     public void setNoOfCards(Integer noOfCards) {
         this.noOfCards = noOfCards;
     }
 
-    public ConsoleInput getUserInput() {
-        return userInput;
-    }
-
-    public Output getUserOutput(){
-        return this.userOutput;
-    }
-
-    public CardGame getGame(){
-        return game;
-    }
-
-    public Deck getDeck() { return deck;}
-
-    public ArrayList<Player> getPlayers(){
-        return players;
-    }
-
-    protected void setGame(CardGame game){
-        this.game = game;
+    public Deck getDeck() {
+        return deck;
     }
 
     public CardGame(){
@@ -140,7 +122,7 @@ public class CardGame {
     public void showPlayers(){
         for (Player player: players){
             userOutput.output(player.getName());
-            userOutput.output(player.getHand().show());
+            userOutput.output(player.getHand().toString());
 
         }
     }

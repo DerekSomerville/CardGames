@@ -22,8 +22,14 @@ public enum Suit {
         this.camelCase = camelCase;
     }
 
-    public String display(){
+    public String displayCamelCase(){
         return camelCase;
+    }
+
+    public String displayFirstLetter() { return this.camelCase.substring(0,1);}
+
+    public String toString(){
+        return this.displayFirstLetter();
     }
 
     public static Suit getSuit(String shortCode){

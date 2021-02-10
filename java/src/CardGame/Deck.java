@@ -1,6 +1,5 @@
 package CardGame;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -61,7 +60,7 @@ public class Deck{
 
     public static void main(String[ ] args) {
         Deck deck = new Deck();
-        System.out.println(deck.shuffleDeck().show());
+        System.out.println(deck.shuffleDeck().toString());
     }
 }
 

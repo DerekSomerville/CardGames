@@ -29,7 +29,7 @@ public class Hand implements Iterator{
         Card[] newhand = new Card[handOfCards.length];
         int newHandCounter = 0;
         for ( int counter=0; counter < handOfCards.length; counter++){
-            if (card.display() == handOfCards[counter].display()) {
+            if (card.displayCamelCase() == handOfCards[counter].displayCamelCase()) {
                 newhand[newHandCounter] = handOfCards[counter];
                 newHandCounter++;
             }
@@ -109,7 +109,7 @@ public class Hand implements Iterator{
         String display = "";
         String prefix = "";
         for (Card card : handOfCards){
-            display += prefix + card.shortDisplay();
+            display += prefix + card.toString();
             prefix = ", ";
         }
         return display;
@@ -121,7 +121,7 @@ public class Hand implements Iterator{
     }
     public void sortHand(){
         List<Card> hand = getHandAsList();
-        Collections.sort(hand, Comparator.comparing(Card::shortDisplay));
+        Collections.sort(hand, Comparator.comparing(Card::toString));
     }
 
     public void sortHandByFace(){

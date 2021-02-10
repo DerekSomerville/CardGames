@@ -9,11 +9,11 @@ public class ReadyToPlayState implements PlayerState{
     }
 
     public PlayerState twist(BlackJackWithState game, Player player){
-        game.getUserOutput().output("Not a valid choice");
+        game.output.output("Not a valid choice");
         return this;
     }
     public PlayerState stick(BlackJackWithState game, Player player){
-        game.getUserOutput().output("Not a valid choice");
+        game.output.output("Not a valid choice");
         return this;
     }
     public PlayerState end(BlackJackWithState game, Player player){

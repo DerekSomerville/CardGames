@@ -51,8 +51,8 @@ public class GinRummy extends CardGame {
         try {
             hand.sortHandByFace();
         } catch (Exception e) {
-            getUserOutput().output("sortHandByFace failed");
-            getUserOutput().outputHand(hand);
+            this.userOutput.output("sortHandByFace failed");
+            this.userOutput.outputHand(hand);
         }
         int previousRank = 0;
         for (Card card : hand.getHandOfCards()){
@@ -77,26 +77,26 @@ public class GinRummy extends CardGame {
 
 
     private void help(){
-        getUserOutput().output("Take from the dis Guarded pile or from the Deck");
+        this.userOutput.output("Take from the dis Guarded pile or from the Deck");
         if (discardCards.size() > 0) {
-            getUserOutput().output("The dis guarded card " + discardCards.getHandOfCards().get(discardCards.size()-1).shortDisplay());
+            this.userOutput.output("The dis guarded card " + discardCards.getHandOfCards().get(discardCards.size()-1).toString());
         }
     }
 
     private void humanPlaysHand(Player player){
         help();
-        String userChoice = getUserInput().getInputString();
+        String userChoice = userInput.getInputString();
         Card card;
         if (userChoice.toUpperCase().equals("D")){
-            card = getDeck().playACard();
+            card = deck.playACard();
         } else {
             card = discardCards.playACard();
         }
         player.getHand().add(card);
         player.getHand().sortHand();
-        getUserOutput().output(player.getHand().show());
-        getUserOutput().output("Please enter zero to seven to select card to dis guard or enter the card e.g. HA");
-        String userCard = getUserInput().getInputString();
+        userOutput.output(player.getHand().toString());
+        userOutput.output("Please enter zero to seven to select card to dis guard or enter the card e.g. HA");
+        String userCard = userInput.getInputString();
         discardCards.add(player.getHand().playACard(userCard));
     }
 
@@ -115,7 +115,7 @@ public class GinRummy extends CardGame {
         }
 
         if (playFromDeck) {
-            player.getHand().add(getDeck().playACard());
+            player.getHand().add(deck.playACard());
         }
 
     }
@@ -157,8 +157,8 @@ public class GinRummy extends CardGame {
         int total = scoreHand(player.getHand());
         if (total >= numberOfCards){
             winner = true;
-            getUserOutput().output("Winner is " + player.getName());
-            getUserOutput().output(player.getHand().show());
+            userOutput.output("Winner is " + player.getName());
+            userOutput.output(player.getHand().toString());
         }
 
         return winner;

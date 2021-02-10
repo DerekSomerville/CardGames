@@ -40,6 +40,6 @@ class CardTest {
     @Test
     void createCardSameDisplay() {
         Card card = new Card(Suit.HEARTS,CardRank.ACE);
-        assertEquals(card.display(),Card.createCard("HA").display());
+        assertEquals(card.displayCamelCase(),Card.createCard("HA").displayCamelCase());
     }
 }

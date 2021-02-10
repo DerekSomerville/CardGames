@@ -39,4 +39,11 @@ class CardRankTest {
     void getCardRankValueAce() {
         assertEquals(11,CardRank.ACE.getValue());
     }
+
+    @Test
+    void getShortDisplayAce(){ assertEquals("A",CardRank.ACE.shortDisplay());}
+
+    @Test
+    void getShortDisplayNine(){ assertEquals("9",CardRank.NINE.shortDisplay());}
+
 }

@@ -8,7 +8,7 @@ class SuitTest {
 
     @Test
     void displayHearts() {
-        assertEquals("Hearts", Suit.HEARTS.display());
+        assertEquals("Hearts", Suit.HEARTS.displayCamelCase());
 
     }
 

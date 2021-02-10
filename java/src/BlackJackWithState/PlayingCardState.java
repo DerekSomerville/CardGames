@@ -6,7 +6,7 @@ import Player.Player;
 
 public class PlayingCardState implements PlayerState{
     public PlayerState playGame(BlackJackWithState game, Player player){
-        game.getUserOutput().output("Not a valid choice");
+        game.output.output("Not a valid choice");
         return this;
     }
 
@@ -14,7 +14,7 @@ public class PlayingCardState implements PlayerState{
         PlayerState playerState = this;
         player.getHand().add(game.getDeck().playACard());
         if (game.getScore(player.getHand()) > game.getMaxScore()){
-            game.getUserOutput().output("You are bust");
+            game.output.output("You are bust");
             playerState = new EndState();
         }
         return playerState;
@@ -23,7 +23,7 @@ public class PlayingCardState implements PlayerState{
         return new EndState();
     }
     public PlayerState end(BlackJackWithState game, Player player){
-        game.getUserOutput().output("Not a valid choice");
+        game.output.output("Not a valid choice");
         return new EndState();
     }
 

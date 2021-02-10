@@ -5,10 +5,11 @@ import Player.Player;
 import BlackJack.BlackJack;
 import BlackJack.BlackJackActions;
 import Display.Output;
+import CardGame.CardGame;
 
 public class BlackJackWithState extends BlackJack {
 
-    private Output output = new ConsoleOutput();
+    protected Output output = new ConsoleOutput();
 
     private PlayerState callAction(Player player, BlackJackActions action, PlayerState playerState) {
         if (action == BlackJackActions.PLAY){
@@ -38,9 +39,9 @@ public class BlackJackWithState extends BlackJack {
     public void play() {
         this.setNoOfCards(2);
         this.initiatePlayers();
-        userPlays(this.getPlayers().get(0));
-        for (int counter=1; counter < getPlayers().size();counter++){
-            this.computerPlays(getPlayers().get(counter));
+        userPlays(this.players.get(0));
+        for (int counter=1; counter < players.size();counter++){
+            this.computerPlays(players.get(counter));
         }
         determineWinner();
     }
@@ -51,27 +52,5 @@ public class BlackJackWithState extends BlackJack {
 
     }
 
-
- //   private void callAction(Player.Player player, String request){
- //       getUserOutput().output("Request " +request);
- //       getUserOutput().output("Call Action state " + player.getState().state());
-        //Derektry {
-  //          if (request == "Play"){
-  //              getUserOutput().output("If Play " + player.getState().state());
-  //              player.setState(new BlackJackWithState.PlayingCardState());
-  //              player.getState().playGame(player);
- //           }
- //           else if (request  == "Twist"){
- //               player.getState().twist(player);
- //           }
- //           else if (request == "Stick"){
- //               player.getState().stick(player);
- //           } else {
-  //              getUserOutput().output("Command not found");
-//            }
-        //}catch (Exception UnsupportedOperationException) {
-        //    getUserOutput().output("Command not valid for current state");
-        //}
- //   }
 
 }

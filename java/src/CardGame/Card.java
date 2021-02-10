@@ -19,16 +19,16 @@ public class Card {
         return rank;
     }
 
-    public String display(){
-        return suit.display() + " " + rank.display();
+    public String displayCamelCase(){
+        return suit.displayCamelCase() + " " + rank.displayCamelCase();
     }
 
     public String displayOf(){
-        return rank.display() + " of " + suit.display();
+        return rank.displayCamelCase() + " of " + suit.displayCamelCase();
     }
 
-    public String shortDisplay(){
-        return suit.display().substring(0,1) + rank.getValue();
+    public String toString(){
+        return suit + rank.toString();
     }
 
     public static Card createCard(String shortCode) {
