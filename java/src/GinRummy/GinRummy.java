@@ -6,6 +6,7 @@ import CardGame.Hand;
 import Player.PlayerType;
 import CardGame.Card;
 import CardGame.Suit;
+import CardGame.CardRank;
 
 import java.util.ArrayList;
 
@@ -14,28 +15,32 @@ public class GinRummy extends CardGame {
     private Hand discardCards = new Hand();
     public int numberOfCards = 7;
 
-    private ArrayList<Hand> getCardsOfSameSuite(Hand hand){
-        ArrayList<Hand> cardsGroupBySuits = new ArrayList<Hand>();
-        hand.sortHand();
-        Suit previousSuit = null;
-        Hand cardsOfSameSuit = new Hand();
+    protected ArrayList<Hand> getCardsOfSameNumber(Hand hand){
+        ArrayList<Hand> cardsGroupBySameFace = new ArrayList<Hand>();
+        hand.sortHandByFace();
+        CardRank previousFace = null;
+        Hand cardsOfSameSameFace = new Hand();
         for (Card card : hand.getHandOfCards()) {
-            if (card.getSuit() == previousSuit ){
-                cardsOfSameSuit.add(card);
-            } else {
-                if (cardsOfSameSuit.size() > 0){
-                    cardsGroupBySuits.add(cardsOfSameSuit.copy());
+            if (card.getRank() == previousFace ){
+                cardsOfSameSameFace.add(card);
+            } else if (cardsOfSameSameFace.size() ==  0){
+                cardsOfSameSameFace.add(card);
+                previousFace = card.getRank();
+            }
+            else {
+                if (cardsOfSameSameFace.size() > 1){
+                    cardsGroupBySameFace.add(cardsOfSameSameFace.copy());
                 }
-                cardsOfSameSuit.clear();
-                cardsOfSameSuit.add(card);
-                previousSuit = card.getSuit();
+                cardsOfSameSameFace.clear();
+                cardsOfSameSameFace.add(card);
+                previousFace = card.getRank();
             }
         }
-        cardsGroupBySuits.add(cardsOfSameSuit.copy());
-        return cardsGroupBySuits;
+        cardsGroupBySameFace.add(cardsOfSameSameFace.copy());
+        return cardsGroupBySameFace;
     }
 
-    private ArrayList<Hand> hasWinningHands(ArrayList<Hand>  hands){
+    protected ArrayList<Hand> hasWinningHands(ArrayList<Hand>  hands){
         ArrayList<Hand> winningHands = new ArrayList<Hand>();
         for (Hand hand : hands){
             if (hand.size() >= 3) {
@@ -45,30 +50,37 @@ public class GinRummy extends CardGame {
         return winningHands;
     }
 
-    private ArrayList<Hand> getRuns(Hand hand){
+    protected ArrayList<Hand> getRuns(Hand hand){
         ArrayList<Hand> cardsGroupByRuns = new ArrayList<Hand>();
         Hand cardsInRun = new Hand();
         try {
-            hand.sortHandByFace();
+            hand.sortHand();
         } catch (Exception e) {
-            this.userOutput.output("sortHandByFace failed");
+            this.userOutput.output("sortHand failed");
             this.userOutput.outputHand(hand);
         }
-        int previousRank = 0;
+
+        Card firstCard = hand.getFirstCard();
+        int previousRank = firstCard.getRank().getRank();
+        Suit previousSuit = firstCard.getSuit();
         for (Card card : hand.getHandOfCards()){
-            if (previousRank + 1 == card.getRank().getRank()) {
+            if (previousSuit == card.getSuit() && previousRank + 1 == card.getRank().getRank()) {
                 cardsInRun.add(card);
                 previousRank = card.getRank().getRank();
-            } else if (previousRank == card.getRank().getRank()){
+                previousSuit = card.getSuit();
+            } else if (cardsInRun.size() == 0){
+                cardsInRun.add(card);
                 previousRank = card.getRank().getRank();
-            } else {
-                if (cardsInRun.size() > 0){
+                previousSuit = card.getSuit();
+            }
+            else {
+                if (cardsInRun.size() > 1){
                     cardsGroupByRuns.add(cardsInRun.copy());
                 }
                 previousRank = card.getRank().getRank();
+                previousSuit = card.getSuit();
                 cardsInRun.clear();
                 cardsInRun.add(card);
-
             }
         }
         cardsGroupByRuns.add(cardsInRun.copy());
@@ -76,14 +88,14 @@ public class GinRummy extends CardGame {
     }
 
 
-    private void help(){
+    protected void help(){
         this.userOutput.output("Take from the dis Guarded pile or from the Deck");
         if (discardCards.size() > 0) {
             this.userOutput.output("The dis guarded card " + discardCards.getHandOfCards().get(discardCards.size()-1).toString());
         }
     }
 
-    private void humanPlaysHand(Player player){
+    protected void humanPlaysHand(Player player){
         help();
         String userChoice = userInput.getInputString();
         Card card;
@@ -100,7 +112,7 @@ public class GinRummy extends CardGame {
         discardCards.add(player.getHand().playACard(userCard));
     }
 
-    private void computerPlaysHand(Player player){
+    protected void computerPlaysHand(Player player){
         Card card = null;
         boolean playFromDeck = true;
         if (discardCards.size() > 0) {
@@ -131,11 +143,12 @@ public class GinRummy extends CardGame {
 
     public int scoreHand(Hand hand){
         Hand newHand = hand.copy();
-
+        //System.out.println("New Hand before same number" + newHand);
         int total = 0;
-        ArrayList<Hand> listOfSuits = getCardsOfSameSuite(newHand);
+        ArrayList<Hand> listOfSameNumber = getCardsOfSameNumber(newHand);
+        //System.out.println("List of Same Numbers" + listOfSameNumber.get(0));
 
-        for (Hand currentHand : listOfSuits){
+        for (Hand currentHand : listOfSameNumber){
             if (currentHand.size() >= 3) {
                 total += currentHand.size();
                 for (Card card : currentHand.getHandOfCards()){
@@ -143,7 +156,10 @@ public class GinRummy extends CardGame {
                 }
             }
         }
+
+        //System.out.println("New Hand before run" + newHand);
         ArrayList<Hand> listOfRuns = getRuns(newHand);
+        //System.out.println("List of runs" + listOfRuns.get(0));
         for (Hand currentHand : listOfRuns){
             if (currentHand.size() >= 3) {
                 total += currentHand.size();

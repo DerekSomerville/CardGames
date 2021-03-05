@@ -14,6 +14,10 @@ public class Hand{
         return handOfCards;
     }
 
+    public Card getFirstCard() {
+        return handOfCards.get(0);
+    }
+
     public Boolean playACard(Card card){
         return handOfCards.remove(card);
     }
