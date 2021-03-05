@@ -10,6 +10,20 @@ public class Hand{
         this.handOfCards = new ArrayList<Card>();
     }
 
+    public Hand(String[] listOfCards){
+        this.handOfCards = new ArrayList<Card>();
+        for (String card : listOfCards){
+            this.handOfCards.add(Card.createCard(card));
+        }
+    }
+
+    public Hand(String listOfCards){
+        this.handOfCards = new ArrayList<Card>();
+        for (String card : listOfCards.split(",")){
+            this.handOfCards.add(Card.createCard(card));
+        }
+    }
+
     public ArrayList<Card> getHandOfCards(){
         return handOfCards;
     }

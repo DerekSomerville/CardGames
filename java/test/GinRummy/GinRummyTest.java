@@ -16,8 +16,7 @@ class GinRummyTest {
     @Test
     void playerHasWonRun4Same3() {
         Player player = new Player(PlayerType.USER,"Derek",0);
-        String[] listOfCards = {"H2","H3","C7","H4","H5","H7","D7"};
-        Hand hand = Hand.createHand(listOfCards);
+        Hand hand = new Hand("H2,H3,C7,H4,H5,H7,D7");
         player.setHand(hand);
         assertTrue(ginRummy.playerHasWon(player));
     }
